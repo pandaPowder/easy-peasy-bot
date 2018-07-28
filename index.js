@@ -85,8 +85,13 @@ controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "I'm here!")
 });
 
-controller.hears('hello', 'direct_message', function (bot, message) {
-    bot.reply(message, 'Hello!');
+controller.hears(['hello', 'hi', 'greetings'], ['direct_mention', 'mention', 'direct_message', 'ambient'], function(bot,message) {
+     bot.reply(message, 'Hello Dallas man!');
+});
+
+controller.hears([':bna: (.*)'], ['direct_mention', 'mention', 'direct_message', 'ambient'], function(bot,message) {
+     var bandName = message.match[1];
+     bot.reply(message, 'Looking for info on ' + bandName);
 });
 
 
