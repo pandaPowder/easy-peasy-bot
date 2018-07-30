@@ -93,12 +93,13 @@ controller.hears([':bna: (.*)'], ['direct_mention', 'mention', 'direct_message',
     .then(function(data){
 	    let resultCount = data.message.body.artist_list.length
 	    if(resultCount > 0) {
-		bot.reply(message, 'A search for ' + bandName + ' yielded ' + resultCount + ' results.');
+		bot.reply(message, 'A search for ' + bandName + ' yielded ' + resultCount + ' or more results.');
 		firstBand = data.message.body.artist_list[0].artist;
 		console.log(data.message.body.artist_list);
 		let genres = firstBand.primary_genres.music_genre_list;
 		let firstGenre = genres[0];
 		bot.reply(message, 'The first result is: ' + firstBand.artist_name + ' and it\'s a ' + firstGenre.music_genre.music_genre_name + ' band from the country of ' + firstBand.artist_country + '. See ' + firstBand.artist_share_url + ' for more info.' );
+		bot.reply(message, 'To see the search results see ' + 'https://www.musixmatch.com/search/' + bandName + '/artists');
 	    }
 	    else {
 		bot.reply(message, 'The band \'' + bandName + '\' doesn\'t seem to exist. Quick, now\'s your chance! Your new career awaits!');
