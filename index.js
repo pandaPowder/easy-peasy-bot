@@ -85,13 +85,24 @@ controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "I'm here!")
 });
 
-controller.hears(['hello', 'hi', 'greetings'], ['direct_mention', 'mention', 'direct_message', 'ambient'], function(bot,message) {
-     bot.reply(message, 'Hello Dallas man!');
-});
-
 controller.hears([':bna: (.*)'], ['direct_mention', 'mention', 'direct_message', 'ambient'], function(bot,message) {
      var bandName = message.match[1];
-     bot.reply(message, 'Looking for info on ' + bandName);
+     bot.reply(message, 'Looking for info on ' + bandName + '...');
+     music = require('musicmatch')({apikey:process.env.MM_KEY});
+     music.artistSearch({q_artist:bandName, page_size:5})
+    .then(function(data){
+	    if(data.message.body.artist_list.length > 0) {
+		firstBand = data.message.body.artist_list[0].artist;
+		let genres = firstBand.primary_genres.music_genre_list;
+		let firstGenre = genres[0];
+		bot.reply(message, 'The band ' + firstBand.artist_name + ' already exists and it\'s a ' + firstGenre.music_genre.music_genre_name + ' band from the country of ' + firstBand.artist_country + '. See ' + firstBand.artist_share_url + ' for more info.' );
+	    }
+	    else {
+		bot.reply(message, 'The band \'' + bandName + '\' doesn\'t seem to exist. Quick, now\'s your chance! Your new career awaits!');
+	    }
+    }).catch(function(err){
+        console.log(err);
+})
 });
 
 

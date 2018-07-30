@@ -1,7 +1,7 @@
 {
-  "name": "easy-peasy-bot",
+  "name": "bandbot",
   "version": "1.0.0",
-  "description": "The awesomest bot evar.",
+  "description": "Listens for incoming :bna: messages and searches musicmatch for info on the band.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -27,6 +27,7 @@
   "dependencies": {
     "botkit": "0.2.2",
     "botkit-storage-mongo": "^1.0.2",
-    "mongodb": "^1.4.39"
+    "mongodb": "^1.4.39",
+    "musicmatch": "^0.3.2"
   }
 }
